@@ -1,0 +1,56 @@
+# builds with all dependencies based on ENVIRONMENT variables set (see below)
+# to use:
+#   > docker-compose build
+#   > docker-compose up
+version: '2'
+services:
+  datomicbase:
+    build:
+      context: ./datomic-pro-base
+      # Set these args as environment variables in your shell
+      args:
+        # my.datomic.com user id
+        - MY_DATOMIC_USER
+
+        # my.datomic.com download key
+        - MY_DATOMIC_DOWNLOAD_KEY
+
+        # version of datomic you desire i.e. 0.9.5394
+        - DATOMIC_VERSION
+
+    image: datomic-pro-base
+  datomicdb:
+    build:
+      context: ./datomic-pro
+      # Set these args as environment variables in your shell
+      args:
+        # license key issued to you from my.tasktop.com
+        # same license-key as would be found in your transactor.properties file
+        - DATOMIC_LICENSE_KEY
+    ports:
+      - "4336:4336"
+      - "4335:4335"
+      - "4334:4334"
+    volumes:
+      - .:/data
+    links:
+      - datomicbase
+  waiter:
+    image: aanand/wait
+    links:
+      - datomicdb
+  console:
+    build: datomic-console
+    ports:
+      - "9000:9000"
+    links:
+      - waiter
+      - datomicdb
+  rest:
+    build:
+      context: ./datomic-rest
+    ports:
+      - "8001:8001"
+    links:
+      - waiter
+      - datomicdb
