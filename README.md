@@ -1,5 +1,5 @@
 # docker-datomic-pro
-Docker composed Datomic Pro DB, Datomic Console, Datomic REST endpoint based on [pointslope/docker-datomic-example](https://github.com/pointslope/docker-datomic-example) idea.
+Docker composed Datomic Pro DB, Datomic Console, Datomic REST endpoint inspired by [pointslope/docker-datomic-example](https://github.com/pointslope/docker-datomic-example).
 
 # Steps
 
