@@ -21,7 +21,7 @@ services:
     image: datomic-pro-base
   datomicdb:
     build:
-      context: ./datomic-pro
+      context: ./datomic-pro-db
       # Set these args as environment variables in your shell
       args:
         # license key issued to you from my.tasktop.com
@@ -40,7 +40,7 @@ services:
     links:
       - datomicdb
   console:
-    build: datomic-console
+    build: datomic-pro-console
     ports:
       - "9000:9000"
     links:
@@ -48,7 +48,7 @@ services:
       - datomicdb
   rest:
     build:
-      context: ./datomic-rest
+      context: ./datomic-pro-rest
     ports:
       - "8001:8001"
     links:
